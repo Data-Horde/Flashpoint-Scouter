@@ -6,4 +6,5 @@ from core.checks import *
 #Attempt Crawl
 def AttemptCrawl():
 	print('Working...')
-	CheckConfigExists()
+	CONFIG = CheckConfigExists()
+	#print(CONFIG)

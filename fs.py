@@ -1,5 +1,6 @@
 # 3rd Party Imports
-import requests, json
+import requests
+
 # Internal Imports
 from core.startup import *
 
