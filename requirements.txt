@@ -1,0 +1,11 @@
+###### Requirements without Version Specifiers ######
+
+requests
+json
+
+###### Requirements with Version Specifiers ######
+
+# ==           # Version Matching.
+# >=           # Minimum version
+# !=           # Version Exclusion. 
+# ~= 1.1       # Compatible release. Same as >= 1.1, == 1.*
