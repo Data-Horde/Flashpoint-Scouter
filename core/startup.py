@@ -5,6 +5,10 @@ from core.checks import *
 
 #Attempt Crawl
 def AttemptCrawl():
+
 	print('Working...')
+
 	CONFIG = CheckConfigExists()
-	#print(CONFIG)
+	#URL-PREFIX METHOD
+	URLPrefix = CheckURLPrefix(CONFIG)
+	print(URLPrefix)

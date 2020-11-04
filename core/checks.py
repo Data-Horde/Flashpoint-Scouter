@@ -18,12 +18,13 @@ def CheckConfigExists():
 
 	return JSON
 
-def CheckURLPrefix(JSON):
-
+def CheckURLPrefix(CONFIG):
 	#Check to see that there is indeed a URLPrefix item in config.json
+	assert ("URLPrefix" in CONFIG), "config.json URLPrefix key is missing"
+	
+	URLPrefix = CONFIG["URLPrefix"]
 
-	#Check to see that its valid
+	#Check to see that it's valid
+	assert (URLPrefix!=""), "Please specify the URLPrefix for your target in config.json"
 
-    #assert (condition), "error"
-
-    return URLPrefix
+	return URLPrefix
