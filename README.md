@@ -4,9 +4,9 @@ A Tool for Scouting game sites full of Flash Games for [Bluemaxima's Flashpoint 
 
 #### Adobe is [~~killing~~ ending the life of Flash](https://www.adobe.com/products/flashplayer/end-of-life.html) at the end of this year.
 
-and people are understably not too happy about this decision. There are several projects out there dedicated to preserving flash media post-2020. One in particular is [Bluemaxima's Flashpoint](http://bluemaxima.org/flashpoint/) dedicated to preserving games and animations.
+and people are understandably not too happy about this decision. There are several projects out there dedicated to preserving flash media post-2020. One in particular is [Bluemaxima's Flashpoint](http://bluemaxima.org/flashpoint/) dedicated to preserving games and animations.
 
-As of my writing this, Flashpoint sports a whopping **60,000 games**. But there is still more to be found. So in hopes of making the hunting process easier the _FlashPoint Scouter (FPS)_ is a tool designed to scour game sites, to see if there are any games currently not included in Flashpoint. This is done by comparing game titles on the website, to those in the Flashpoint database; to determine how much of this website's content is _unrecognized_.
+As of my writing this, Flashpoint supports a whopping **60,000 games**. But there is still more to be found. So in hopes of making the hunting process easier the _FlashPoint Scouter (FPS)_ is a tool designed to scout game sites, to see if there are any games currently not included in Flashpoint. This is done by comparing game titles on the website, to those in the Flashpoint database; to determine how much of this website's content is _unrecognized_.
 
 # How it works
 
@@ -25,7 +25,7 @@ As of my writing this, Flashpoint sports a whopping **60,000 games**. But there 
   - In the Flashpoint Master list
   - Very similar to games in the Flashpoint Master list
   - Kind of similar to games in the Flashpoint Master list
-  - Unrecognizd
+  - Unrecognized
   
 This gives game hunters and curators a quick-look to determine if it's worth gathering games from one game site or another.
   
