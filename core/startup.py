@@ -9,6 +9,10 @@ def AttemptCrawl():
 	print('Working...')
 
 	CONFIG = CheckConfigExists()
+
 	#URL-PREFIX METHOD
 	URLPrefix = CheckURLPrefix(CONFIG)
-	print(URLPrefix)
+	URLSuffix = CheckURLSuffix(CONFIG)
+	
+	#Try powers of two
+	#Don't forget 0 index

@@ -28,3 +28,14 @@ def CheckURLPrefix(CONFIG):
 	assert (URLPrefix!=""), "Please specify the URLPrefix for your target in config.json"
 
 	return URLPrefix
+
+def CheckURLSuffix(CONFIG):
+	#Check to see that there is indeed a URLPrefix item in config.json
+	assert ("URLSuffix" in CONFIG), "config.json URLSuffix key is missing"
+	
+	URLSuffix = CONFIG["URLSuffix"]
+
+	#URLSuffix CAN be empty
+	#assert (URLSuffix!=""), "Please specify the URLSuffix for your target in config.json"
+
+	return URLSuffix
