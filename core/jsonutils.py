@@ -40,3 +40,9 @@ def GetURLSuffix(CONFIG,fname='the configuration file'):
 
 	return URLSuffix
 
+def GetidCount(CONFIG,fname='the configuration file'):
+	"""Read idCount if found in config"""
+	if "SiteInfo" in CONFIG:
+		return CONFIG["SiteInfo"].get("idCount")
+	return None
+
