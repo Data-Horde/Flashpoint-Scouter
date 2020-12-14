@@ -1,5 +1,5 @@
 #Built-Ins
-import random
+#import random
 
 #3rd Party Imports
 import requests
@@ -81,16 +81,20 @@ class Crawler:
         #Use a random number between lower bound and upper bound to determine the next lower bound
 
         THRESHOLD = 20
-        PARTITIONS = 30
-        TRIES = 25
+        PARTITIONS = 10 #30
+        #TRIES = 25
         used = 0 
         
         LB = UB//2
         UB -= 1
 
-        while UB - LB > THRESHOLD and used < TRIES:
+        #while UB - LB > THRESHOLD and used < TRIES:
+        while UB - LB > THRESHOLD and used < PARTITIONS:
             DIFF = UB - LB
-            choice = random.choice([ (LB + x*DIFF//PARTITIONS) for x in range(1,PARTITIONS+1)])
+
+            #Random BAD
+            #choice = random.choice([ (LB + x*DIFF//PARTITIONS) for x in range(1,PARTITIONS+1)])
+            choice = (LB + (PARTITIONS-used-1)*DIFF//PARTITIONS)
 
             target = self.idURL(prefix,choice,suffix)
             try:
@@ -101,12 +105,13 @@ class Crawler:
             #print("Stuck in a loop?")
 
             #print(last_status_code, target)
+            #print(LB, choice, PARTITIONS-used-1)
 
             if last_status_code == 404:
                 used+=1
             elif last_status_code == 200:
-                #Update LB
-                LB=choice
+                #print("updating lower bound")
+                LB=(LB + (PARTITIONS-used)*DIFF//PARTITIONS)
                 used=0
             else:
                 print('got status {}, retrying...'.format(last_status_code))

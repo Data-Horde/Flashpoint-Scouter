@@ -25,7 +25,7 @@ class Configuration:
     def SaveConfig(self):
         """Save Config to file"""
         with open(self.filename,"w") as config:
-            JSON = json.dump(self.dict, config, indent="")
+            JSON = json.dump(self.dict, config, indent=4)
 
     def HardUpdateJSON(self,newconfig):
         """Quick&Dirty Solution for updating internal JSON quickly"""
