@@ -1,3 +1,6 @@
+#Built-Ins
+import random
+
 #3rd Party Imports
 import requests
 
@@ -32,8 +35,9 @@ class Crawler:
 
     #ID-Based Crawl
     def CrawlById(self,prefix,suffix):
-
-        
+        """
+        DocString goes here, follow the steps 0 through 3 for now.
+        """
 
         #Determine Limit
         LIMIT = 0
@@ -56,22 +60,89 @@ class Crawler:
             try:
                 last_status_code = self.getStatusCode(target)
             except requests.exceptions.ConnectionError as e:
-                print("Lost internet connection, retrying")
+                print("Unable to connect, retrying")
                 continue
             
             #print(target)
             #print(UB+used, last_status_code)
             print(last_status_code, target)
     
-            if last_status_code != 200:
+            if last_status_code == 404:
                 used+=1
-            else:
+            elif last_status_code == 200:
                 UB*=2
                 used=0
+            else:
+                print('got status {}, retrying...'.format(last_status_code))
+                continue
 
         print("No more than {} items!".format(str(UB)))
+        used=0
 
-        #Step 2: Binary Search the limit!
+        #Step 2: Find a reasonable lower bound
+
+        #Key Assumption: Lower Bound is GUARANTEED to be accesible
+        #Upper bound is GUARANTEED to have nothing beyond that point
+        #Use a random number between lower bound and upper bound to determine the next lower bound
+
+        THRESHOLD = 20
+        PARTITIONS = 30
+        TRIES = 25
+        used = 0 
+        
+        LB = UB//2
+        UB -= 1
+
+        while UB - LB > THRESHOLD and used < TRIES:
+            DIFF = UB - LB
+            choice = random.choice([ (LB + x*DIFF//PARTITIONS) for x in range(1,PARTITIONS+1)])
+
+            target = self.idURL(prefix,choice,suffix)
+            try:
+                last_status_code = self.getStatusCode(target)
+            except requests.exceptions.ConnectionError as e:
+                print("Unable to connect, retrying")
+                continue
+            #print("Stuck in a loop?")
+            print(last_status_code, target)
+
+            if last_status_code == 404:
+                used+=1
+            elif last_status_code == 200:
+            	#Update LB
+                LB=choice
+                used=0
+            else:
+                print('got status {}, retrying...'.format(last_status_code))
+                continue
+
+        #If we run out of tries, lower the upper bound
+        if UB - LB > THRESHOLD:
+        	DIFF = UB - LB
+        	UB = LB + DIFF//PARTITIONS
+
+        #print(LB, UB)
+        #print("LIMIT: {}".format(UB))
+
+        #Step 3: Lower UB until we reach LB
+        while UB > LB:
+            target = self.idURL(prefix,choice,suffix)
+            try:
+                last_status_code = self.getStatusCode(target)
+            except requests.exceptions.ConnectionError as e:
+                print("Unable to connect, retrying")
+                continue
+            print("Stuck in a loop?")
+            print(LB, UB)
+            print(last_status_code, target)
+            if last_status_code == 404:
+                UB-=1
+            elif last_status_code == 200:
+            	#Update LB
+                break
+
+        LIMIT = UB
+        print(LIMIT)
 
     #Attempt Crawl
     def AttemptCrawl(self, crawlMethod='id', urlFormat='pre+suf'):
