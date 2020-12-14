@@ -12,6 +12,7 @@ class Crawler:
     def __init__(self, session):
         self.s = session
         self.CONFIG = Configuration()
+        self.links = []
 
     ###########################
     #Instance Methods
@@ -159,6 +160,8 @@ class Crawler:
         	self.CONFIG.dict["SiteInfo"] = {"idCount":LIMIT}
         	self.CONFIG.SaveConfig()
 
+        return [ self.idURL(prefix,x,suffix) for x in range(LIMIT)]
+
     #Attempt Crawl
     def AttemptCrawl(self, crawlMethod='id', urlFormat='pre+suf'):
 
@@ -168,11 +171,11 @@ class Crawler:
             URLSuffix = self.CONFIG.GetURLSuffix()
 
             results = self.CrawlById(URLPrefix,URLSuffix)
-            return results
+            self.links += results
 
         else:
         	print("Unknown crawlMethod or urlFormat when attempting crawl!")
-        	return []
+        	self.links += []
 
     ###########################
     #Static Methods

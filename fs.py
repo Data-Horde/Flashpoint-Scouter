@@ -11,6 +11,7 @@ def main():
     CRWLER = Crawler(s)
     CRWLER.loadConfig()
     CRWLER.AttemptCrawl()
+    print(CRWLER.links)
 
 if __name__ == "__main__":
     main()
