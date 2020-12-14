@@ -39,6 +39,7 @@ class Crawler:
         #Step 0
         #Check 0 index
         #IGNORE WHEN COUNTING, SINCE 0 GETS ITS OWN CHECK
+        print("Counting items by id...")
 
         #Step 1: Find the Upper Bound
         #Check index 1 and try powers of two
@@ -59,7 +60,7 @@ class Crawler:
             
             #print(target)
             #print(UB+used, last_status_code)
-            print(last_status_code, target)
+            #print(last_status_code, target)
     
             if last_status_code == 404:
                 used+=1
@@ -98,7 +99,8 @@ class Crawler:
                 print("Unable to connect, retrying")
                 continue
             #print("Stuck in a loop?")
-            print(last_status_code, target)
+
+            #print(last_status_code, target)
 
             if last_status_code == 404:
                 used+=1
@@ -118,6 +120,7 @@ class Crawler:
         #print(LB, UB)
         #print("LIMIT: {}".format(UB))
 
+        print("COUNTING DOWN... This might take a minute...")
         #Step 3: Lower UB until we reach LB
         while UB > LB:
             target = self.idURL(prefix,choice,suffix)
@@ -126,9 +129,11 @@ class Crawler:
             except requests.exceptions.ConnectionError as e:
                 print("Unable to connect, retrying")
                 continue
-            print("Stuck in a loop?")
-            print(LB, UB)
-            print(last_status_code, target)
+            #print("Stuck in a loop?")
+
+            #print(LB, UB)
+            #print(last_status_code, target)
+
             if last_status_code == 404:
                 UB-=1
             elif last_status_code == 200:
@@ -141,11 +146,13 @@ class Crawler:
     def CrawlById(self,prefix,suffix):
 
         #Determine Limit
-        LIMIT = 0
+        LIMIT = self.CONFIG.GetidCount()
 
-        print("Todo: implement save/loading counts and cookies from json!")
-
-        LIMIT = self.getIdLimit(prefix,suffix)
+        if not LIMIT:
+        	LIMIT = self.getIdLimit(prefix,suffix)
+        	print("Updating {}".format(self.CONFIG.filename))
+        	self.CONFIG.dict["SiteInfo"] = {"idCount":LIMIT}
+        	self.CONFIG.SaveConfig()
 
     #Attempt Crawl
     def AttemptCrawl(self, crawlMethod='id', urlFormat='pre+suf'):
