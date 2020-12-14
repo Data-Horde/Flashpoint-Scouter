@@ -5,26 +5,23 @@ import random
 import requests
 
 #Internal Imports
-from core.jsonutils import *
+from core.config import *
 
 class Crawler:
     """A crawler class"""
     def __init__(self, session):
         self.s = session
-
-        self.cnfname = ""
-        self.CONFIG = {}
+        self.CONFIG = Configuration()
 
     ###########################
     #Instance Methods
     ###########################
 
-    def loadConfig(self, jsonfile='config.json'):
+    def loadConfig(self, file='config.json'):
         """
         Load a configuration file. "config.json" by default.
         """
-        self.cnfname = jsonfile
-        self.CONFIG = ReadConfig(jsonfile)
+        self.CONFIG.ReadConfig(file)
 
     def getStatusCode(self,URL):
         """
@@ -145,7 +142,7 @@ class Crawler:
 
         #Determine Limit
         LIMIT = 0
-        
+
         print("Todo: implement save/loading counts and cookies from json!")
 
         LIMIT = self.getIdLimit(prefix,suffix)
@@ -155,8 +152,8 @@ class Crawler:
 
         if crawlMethod == 'id' and urlFormat == 'pre+suf':
 
-            URLPrefix = GetURLPrefix(self.CONFIG)
-            URLSuffix = GetURLSuffix(self.CONFIG)
+            URLPrefix = self.CONFIG.GetURLPrefix()
+            URLSuffix = self.CONFIG.GetURLSuffix()
 
             results = self.CrawlById(URLPrefix,URLSuffix)
             return results
