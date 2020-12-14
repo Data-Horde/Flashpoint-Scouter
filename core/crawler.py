@@ -32,15 +32,12 @@ class Crawler:
         Returns None if ConnectionError
         """
         return self.s.get(URL).status_code
-
-    #ID-Based Crawl
-    def CrawlById(self,prefix,suffix):
+    
+    def getIdLimit(self, prefix, suffix):
         """
+        Count upto the last id for a given website. 
         DocString goes here, follow the steps 0 through 3 for now.
         """
-
-        #Determine Limit
-        LIMIT = 0
 
         #Step 0
         #Check 0 index
@@ -109,7 +106,7 @@ class Crawler:
             if last_status_code == 404:
                 used+=1
             elif last_status_code == 200:
-            	#Update LB
+                #Update LB
                 LB=choice
                 used=0
             else:
@@ -118,8 +115,8 @@ class Crawler:
 
         #If we run out of tries, lower the upper bound
         if UB - LB > THRESHOLD:
-        	DIFF = UB - LB
-        	UB = LB + DIFF//PARTITIONS
+            DIFF = UB - LB
+            UB = LB + DIFF//PARTITIONS
 
         #print(LB, UB)
         #print("LIMIT: {}".format(UB))
@@ -138,11 +135,20 @@ class Crawler:
             if last_status_code == 404:
                 UB-=1
             elif last_status_code == 200:
-            	#Update LB
+                #Update LB
                 break
 
-        LIMIT = UB
-        print(LIMIT)
+        return UB
+    
+    #ID-Based Crawl
+    def CrawlById(self,prefix,suffix):
+
+        #Determine Limit
+        LIMIT = 0
+        
+        print("Todo: implement save/loading counts and cookies from json!")
+
+        LIMIT = self.getIdLimit(prefix,suffix)
 
     #Attempt Crawl
     def AttemptCrawl(self, crawlMethod='id', urlFormat='pre+suf'):
@@ -151,8 +157,6 @@ class Crawler:
 
             URLPrefix = GetURLPrefix(self.CONFIG)
             URLSuffix = GetURLSuffix(self.CONFIG)
-
-            print("Todo: implement save/loading counts and cookies from json!")
 
             results = self.CrawlById(URLPrefix,URLSuffix)
             return results
