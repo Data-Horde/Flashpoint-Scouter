@@ -17,18 +17,19 @@ class Configuration:
             with open(jsonfile,"r") as config:
                 JSON = json.load(config)
         except:
-            raise Exception("{} is not a valid json object".format(jsonfile))       
+            raise Exception("{} is not a valid json object".format(jsonfile))     
         #Read contents and rename placeholder filename to be used for writes
         self.dict = JSON
         self.filename = jsonfile
 
     def SaveConfig(self):
         """Save Config to file"""
-        pass
+        with open(this.filename,"r") as config:
+            JSON = json.dump(self.dict, config)
 
-    def UpdateJSON(self):
-        """Update internal JSON"""
-        pass
+    def HardUpdateJSON(self,newconfig):
+        """Quick&Dirty Solution for updating internal JSON quickly"""
+        self.dict=newconfig
 
     def GetURLPrefix(self):
         """Read URLPrefix in config"""
