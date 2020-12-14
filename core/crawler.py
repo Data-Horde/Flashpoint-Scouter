@@ -16,7 +16,7 @@ class Crawler:
         self.CONFIG = {}
 
     ###########################
-    #Takes self
+    #Instance Methods
     ###########################
 
     def loadConfig(self, jsonfile='config.json'):
@@ -162,10 +162,10 @@ class Crawler:
         	return []
 
     ###########################
-    #Doesn't NEED self
+    #Static Methods
     ###########################
-
-    def idURL(self,prefix,id,suffix=''):
+    @staticmethod
+    def idURL(prefix,id,suffix=''):
         return prefix+str(id)+suffix
 
 
