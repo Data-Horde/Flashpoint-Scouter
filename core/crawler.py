@@ -157,7 +157,7 @@ class Crawler:
         if not LIMIT:
         	LIMIT = self.getIdLimit(prefix,suffix)
         	print("Updating {}".format(self.CONFIG.filename))
-        	self.CONFIG.dict["SiteInfo"] = {"idCount":LIMIT, "cssSelector":""}
+        	self.CONFIG.dict["SiteInfo"] = {"idCount":LIMIT, "TitleSelector":""}
         	self.CONFIG.SaveConfig()
 
         return [ self.idURL(prefix,x,suffix) for x in range(LIMIT)]
@@ -199,7 +199,13 @@ class Crawler:
     	Ask for CSS title selector
     	"""
     	self.TrimHead()
-    	#self.CONFIG.GetcssSelector()
+    	titleSelect = self.CONFIG.GetTitleCSS()
+    	if titleSelect == "":
+    		print("Title Selector unspecified, please add a css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
+    		quit()
+    	print("TODO: PREVIEW THIS SELECTOR")
+    	
+
     ###########################
     #Static Methods
     ###########################
