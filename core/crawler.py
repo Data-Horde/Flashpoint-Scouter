@@ -157,7 +157,7 @@ class Crawler:
         if not LIMIT:
         	LIMIT = self.getIdLimit(prefix,suffix)
         	print("Updating {}".format(self.CONFIG.filename))
-        	self.CONFIG.dict["SiteInfo"] = {"idCount":LIMIT}
+        	self.CONFIG.dict["SiteInfo"] = {"idCount":LIMIT, "cssSelector":""}
         	self.CONFIG.SaveConfig()
 
         return [ self.idURL(prefix,x,suffix) for x in range(LIMIT)]
@@ -177,6 +177,29 @@ class Crawler:
         	print("Unknown crawlMethod or urlFormat when attempting crawl!")
         	self.links += []
 
+
+    def TrimHead(self):
+        """
+        Discard early links which are inaccesible
+        """
+        last_status_code = -1
+        while last_status_code != 200:
+            target = self.links[0]
+            try:
+                last_status_code = self.getStatusCode(target)
+            except requests.exceptions.ConnectionError as e:
+                print("Unable to connect, retrying")
+                continue
+            if last_status_code == 404:
+                self.links = self.links[1:]
+        #print(self.links[0])
+
+    def SelectTitle(self):
+    	"""
+    	Ask for CSS title selector
+    	"""
+    	self.TrimHead()
+    	#self.CONFIG.GetcssSelector()
     ###########################
     #Static Methods
     ###########################

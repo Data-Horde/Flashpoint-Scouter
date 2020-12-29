@@ -1,7 +1,8 @@
 {
-"URLPrefix": "http://www.oyunlar1.com/games.php?flash=",
-"URLSuffix": "",
-"SiteInfo": {
-"idCount": 12287
-}
+	"URLPrefix": "http://www.oyunlar1.com/online.php?flash=",
+	"URLSuffix": "",
+	"SiteInfo": {
+		"idCount": 12287,
+		"cssSelector": "#gameInfoDescription > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > h1:nth-child(2)"
+	}
 }

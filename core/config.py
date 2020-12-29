@@ -54,3 +54,9 @@ class Configuration:
         if "SiteInfo" in self.dict:
             return self.dict["SiteInfo"].get("idCount")
         return None
+
+    def GetcssSelector(self):
+        """Read cssSelector if found in config"""
+        if "SiteInfo" in self.dict:
+            return self.dict["SiteInfo"].get("cssSelector")
+        return None
