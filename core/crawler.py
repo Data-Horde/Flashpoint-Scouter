@@ -3,6 +3,7 @@
 
 #3rd Party Imports
 import requests
+from selectolax.parser import HTMLParser
 
 #Internal Imports
 from core.config import *
@@ -30,6 +31,15 @@ class Crawler:
         Returns None if ConnectionError
         """
         return self.s.get(URL).status_code
+
+    def getContents(self,URL):
+        """
+        Attempt to get a URL.
+        Return status code and content
+        Returns None if ConnectionError
+        """
+        request = self.s.get(URL)
+        return request.status_code,request.content
     
     def getIdLimit(self, prefix, suffix):
         """
@@ -203,8 +213,21 @@ class Crawler:
     	if titleSelect == "":
     		print("Title Selector unspecified, please add a css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
     		quit()
-    	print("TODO: PREVIEW THIS SELECTOR")
-    	
+
+    	#print("TODO: PREVIEW THIS SELECTOR")
+    	pageContents,last_status_code="",-1
+    	while last_status_code != 200:
+    		target = self.links[0]
+    		try:
+    			last_status_code, pageContents = self.getContents(target)
+    		except requests.exceptions.ConnectionError as e:
+    			print("Unable to connect, retrying")
+    			continue
+    	titletree = HTMLParser(pageContents)
+    	titlepreview = titletree.css_first(titleSelect).text()
+    	print("Title Preview:")
+    	print(titlepreview)
+    	print("Does this game's title match? {}".format(self.links[0]))
 
     ###########################
     #Static Methods
