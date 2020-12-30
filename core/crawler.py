@@ -1,5 +1,5 @@
 #Built-Ins
-#import random
+import os, sys
 
 #3rd Party Imports
 import requests
@@ -239,7 +239,7 @@ class Crawler:
     			quit()
 
     def checkGrabMade(self):
-    	return True
+    	return os.path.exists(self.CONFIG.name+"-list.csv")
 
     def Grab(self,sleep=0.0,limit=-1):
         """
@@ -278,7 +278,7 @@ class Crawler:
                     print("Error: Skipping {}".format(target))
             self.links = self.links[1:]
         siteData = pd.DataFrame({"title":titles,"URL":gURLs})
-        siteData.to_csv('{}.csv'.format(self.CONFIG.filename[:-5]))
+        siteData.to_csv('{}.csv'.format(self.CONFIG.name+"-list.csv"))
 
     ###########################
     #Static Methods
