@@ -239,15 +239,22 @@ class Crawler:
     			print("Please reconfigugre your the css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
     			quit()
 
+    def checkGrabMade(self):
+    	return True
+
     def Grab(self,sleep=0.0,limit=-1):
         """
         Begin grabbing games/game names!
         """
-        self.TrimHead()
-        titleSelect = self.CONFIG.GetTitleCSS()
-        if titleSelect == "":
-            print("Title Selector unspecified, please add a css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
-            quit()
+
+        #Abort if a grab was made
+        if self.checkGrabMade():
+        	return
+
+        # PHASE 2: Select Title Check
+        self.SelectTitle()
+
+        #TODO: ADD GAME GRABBER HERE!
 
         last_status_code = -1
         gURLs,titles = [],[]

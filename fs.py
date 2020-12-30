@@ -17,14 +17,11 @@ def main():
     CRWLER.AttemptCrawl()
     #print(CRWLER.links)
 
-    # PHASE 2: TITLE/GAMEFILE SELECTION
-    CRWLER.SelectTitle()
-    #CRWLER.SelectGame()
-
-    # PHASE 3: GRAB
+    # PHASE 2: GRAB
     CRWLER.Grab()
 
-    # PHASE 4: COMPARE
+    # PHASE 3: COMPARE
+    #CRWLER.Compare()
 
 if __name__ == "__main__":
     main()

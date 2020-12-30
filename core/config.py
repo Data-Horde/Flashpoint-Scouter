@@ -6,6 +6,9 @@ class Configuration:
         self.filename = filename
         self.dict = contents
 
+        defaultname="scouted"
+        self.name = defaultname
+
     def ReadConfig(self, jsonfile="config.json"):
         """Read json config"""
         assert (os.path.exists(jsonfile)), "{} is missing.\nUntil we add something to generate a new config.json we are going to have to ask you to re-install.\nSorry :{".format(jsonfile)
@@ -19,8 +22,17 @@ class Configuration:
         except:
             raise Exception("{} is not a valid json object".format(jsonfile))     
         #Read contents and rename placeholder filename to be used for writes
+
         self.dict = JSON
         self.filename = jsonfile
+
+        #GIVE NAME
+        if "Name" not in self.dict:
+        	defaultname="scouted"
+        	print("No name given for this config, defaulting to:{}".format(defaultname))
+        	self.dict["Name"] = defaultname
+        	self.SaveConfig()
+        self.name = self.dict["Name"]
 
     def SaveConfig(self):
         """Save Config to file"""
