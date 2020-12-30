@@ -1,8 +1,10 @@
 ###### Requirements without Version Specifiers ######
 
 requests
+time
 selectolax
 pandas
+tqdm
 
 ###### Requirements with Version Specifiers ######
 

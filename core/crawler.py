@@ -5,6 +5,8 @@
 import requests
 from selectolax.parser import HTMLParser
 import pandas as pd
+import time
+from tqdm import tqdm
 
 #Internal Imports
 from core.config import *
@@ -237,7 +239,7 @@ class Crawler:
     			print("Please reconfigugre your the css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
     			quit()
 
-    def Grab(self,limit=-1):
+    def Grab(self,sleep=0.0,limit=-1):
         """
         Begin grabbing games/game names!
         """
@@ -250,23 +252,26 @@ class Crawler:
         last_status_code = -1
         gURLs,titles = [],[]
         progress=0
-        while len(self.links) != 0:
+        L = len(self.links)
+        R = range(L) if (limit==-1) else range(min(limit,L))
+        for i in tqdm ( R, desc="Grabbing game titles"):
+            if(sleep > 0.0):
+                time.sleep(sleep)
             target = self.links[0]
             try:
                 last_status_code, pageContents = self.getContents(target)
             except requests.exceptions.ConnectionError as e:
                 print("Unable to connect, retrying")
                 continue
-            if last_status_code != 404:
-                gURLs.append(target)
-                titles.append(HTMLParser(pageContents).css_first(titleSelect).text())
+            if last_status_code < 400 or last_status_code > 499:
+                try:
+                    titles.append(HTMLParser(pageContents).css_first(titleSelect).text())
+                    gURLs.append(target)
+                except:
+                    print("Error: Skipping {}".format(target))
             self.links = self.links[1:]
-            progress+=1
-            if limit != -1 and progress > limit:
-                print(progress)
-                break
-        print({"title":titles,"URL":gURLs})
-
+        siteData = pd.DataFrame({"title":titles,"URL":gURLs})
+        siteData.to_csv('{}.csv'.format(self.CONFIG.filename[:-5]))
 
     ###########################
     #Static Methods
