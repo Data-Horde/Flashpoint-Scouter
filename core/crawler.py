@@ -4,6 +4,7 @@
 #3rd Party Imports
 import requests
 from selectolax.parser import HTMLParser
+import pandas as pd
 
 #Internal Imports
 from core.config import *
@@ -235,6 +236,37 @@ class Crawler:
     		if confirm=="n":
     			print("Please reconfigugre your the css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
     			quit()
+
+    def Grab(self,limit=-1):
+        """
+        Begin grabbing games/game names!
+        """
+        self.TrimHead()
+        titleSelect = self.CONFIG.GetTitleCSS()
+        if titleSelect == "":
+            print("Title Selector unspecified, please add a css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
+            quit()
+
+        last_status_code = -1
+        gURLs,titles = [],[]
+        progress=0
+        while len(self.links) != 0:
+            target = self.links[0]
+            try:
+                last_status_code, pageContents = self.getContents(target)
+            except requests.exceptions.ConnectionError as e:
+                print("Unable to connect, retrying")
+                continue
+            if last_status_code != 404:
+                gURLs.append(target)
+                titles.append(HTMLParser(pageContents).css_first(titleSelect).text())
+            self.links = self.links[1:]
+            progress+=1
+            if limit != -1 and progress > limit:
+                print(progress)
+                break
+        print({"title":titles,"URL":gURLs})
+
 
     ###########################
     #Static Methods

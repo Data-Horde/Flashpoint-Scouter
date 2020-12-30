@@ -22,7 +22,7 @@ def main():
     #CRWLER.SelectGame()
 
     # PHASE 3: GRAB
-    #CRWLER.Grab()
+    CRWLER.Grab(limit=10)
 
     # PHASE 4: COMPARE
 
