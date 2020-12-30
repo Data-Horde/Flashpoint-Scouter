@@ -281,8 +281,8 @@ class Crawler:
                 except:
                     print("Error: Skipping {}".format(target))
             self.links = self.links[1:]
-        siteData = pd.DataFrame({"title":titles,"URL":gURLs})
-        siteData.to_csv('{}.csv'.format(self.listFile()))
+        siteData = pd.DataFrame({"Title":titles,"URL":gURLs})
+        siteData.to_csv('{}'.format(self.listFile()))
         return self.listFile()
 
     ###########################

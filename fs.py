@@ -22,8 +22,10 @@ def main():
     grabfile = CRWLER.Grab()
 
     # PHASE 3: COMPARE
-    CMPRER = Comparer("GML.csv",grabfile)
-    #.Compare()
+    CMPRER = Comparer("GML.csv",grabfile,CRWLER.CONFIG.name)
+    matches = CMPRER.Compare(limit=10)
+
+    print(matches)
 
 if __name__ == "__main__":
     main()
