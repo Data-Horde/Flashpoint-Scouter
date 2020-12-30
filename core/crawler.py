@@ -211,7 +211,6 @@ class Crawler:
     	"""
     	Ask for CSS title selector
     	"""
-    	self.TrimHead()
     	titleSelect = self.CONFIG.GetTitleCSS()
     	if titleSelect == "":
     		print("Title Selector unspecified, please add a css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
@@ -251,10 +250,11 @@ class Crawler:
         if self.checkGrabMade():
         	return
 
-        # PHASE 2: Select Title Check
+        # TRIM HEAD
+        self.TrimHead()
+        # Select Title Check
         self.SelectTitle()
-
-        #TODO: ADD GAME GRABBER HERE!
+        # TODO: ADD GAME GRABBER HERE!
 
         last_status_code = -1
         gURLs,titles = [],[]
