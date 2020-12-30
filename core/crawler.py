@@ -238,8 +238,12 @@ class Crawler:
     			print("Please reconfigugre your the css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
     			quit()
 
+
+    def listFile(self):
+        return self.CONFIG.name+"-list.csv"
+
     def checkGrabMade(self):
-    	return os.path.exists(self.CONFIG.name+"-list.csv")
+    	return os.path.exists(self.listFile())
 
     def Grab(self,sleep=0.0,limit=-1):
         """
@@ -248,7 +252,7 @@ class Crawler:
 
         #Abort if a grab was made
         if self.checkGrabMade():
-        	return
+        	return self.listFile()
 
         # TRIM HEAD
         self.TrimHead()
@@ -278,7 +282,8 @@ class Crawler:
                     print("Error: Skipping {}".format(target))
             self.links = self.links[1:]
         siteData = pd.DataFrame({"title":titles,"URL":gURLs})
-        siteData.to_csv('{}.csv'.format(self.CONFIG.name+"-list.csv"))
+        siteData.to_csv('{}.csv'.format(self.listFile()))
+        return self.listFile()
 
     ###########################
     #Static Methods
@@ -286,5 +291,6 @@ class Crawler:
     @staticmethod
     def idURL(prefix,id,suffix=''):
         return prefix+str(id)+suffix
+
 
 

@@ -3,6 +3,7 @@ import requests
 
 # Internal Imports
 from core.crawler import *
+from core.comparer import *
 
 def main():
     
@@ -18,10 +19,11 @@ def main():
     #print(CRWLER.links)
 
     # PHASE 2: GRAB
-    CRWLER.Grab()
+    grabfile = CRWLER.Grab()
 
     # PHASE 3: COMPARE
-    #CRWLER.Compare()
+    CMPRER = Comparer("GML.csv",grabfile)
+    #.Compare()
 
 if __name__ == "__main__":
     main()
