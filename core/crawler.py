@@ -227,7 +227,14 @@ class Crawler:
     	titlepreview = titletree.css_first(titleSelect).text()
     	print("Title Preview:")
     	print(titlepreview)
-    	print("Does this game's title match? {}".format(self.links[0]))
+
+    	confirm = ""
+    	while confirm!="y" and confirm!="n":
+    		print("Does this game's title match? {} (y)es/(n)o".format(self.links[0]))
+    		confirm=input()
+    		if confirm=="n":
+    			print("Please reconfigugre your the css selector for the game titles under SiteInfo > TitleSelector in the configuration file: {}".format(self.CONFIG.filename))
+    			quit()
 
     ###########################
     #Static Methods

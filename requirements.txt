@@ -2,6 +2,7 @@
 
 requests
 selectolax
+pandas
 
 ###### Requirements with Version Specifiers ######
 

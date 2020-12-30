@@ -19,6 +19,12 @@ def main():
 
     # PHASE 2: TITLE/GAMEFILE SELECTION
     CRWLER.SelectTitle()
+    #CRWLER.SelectGame()
+
+    # PHASE 3: GRAB
+    #CRWLER.Grab()
+
+    # PHASE 4: COMPARE
 
 if __name__ == "__main__":
     main()
